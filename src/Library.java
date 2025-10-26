@@ -1,60 +1,84 @@
+import java.util.ArrayList;
+
 /**
  * ==========================================================
- * Kelas Library
+ * Kelas Library (versi ditingkatkan)
  * ==========================================================
- * Deskripsi:
- * Kelas ini merepresentasikan sebuah perpustakaan yang memiliki
- * lokasi dan menyimpan satu objek Book. Menyediakan method untuk
- * menampilkan informasi perpustakaan dan buku yang tersedia.
- *
- * @author
- * Mochammad Farhan Hikmadi
- * @version
- * 1.0
- * @since
- * 2025-10-27
+ * Mewakili perpustakaan yang dapat menyimpan banyak buku.
+ * Dilengkapi fitur tambah, hapus, cari buku, dan hitung total nilai koleksi.
  */
 public class Library {
-    private Book book;
+    private ArrayList<Book> books;
     private String location;
 
-    /**
-     * Konstruktor untuk membuat objek Library baru.
-     *
-     * @param book     Objek buku yang ada di perpustakaan
-     * @param location Lokasi perpustakaan
-     */
-    public Library(Book book, String location) {
-        this.book = book;
+    public Library(String location) {
+        this.books = new ArrayList<>();
         this.location = location;
     }
 
-    /** @return Objek Book */
-    public Book getBook() {
-        return book;
-    }
-
-    /** @param book Objek Book yang baru */
-    public void setBook(Book book) {
-        this.book = book;
-    }
-
-    /** @return Lokasi perpustakaan */
+    // Getter & Setter
     public String getLocation() {
         return location;
     }
-
-    /** @param location Lokasi perpustakaan yang baru */
     public void setLocation(String location) {
         this.location = location;
     }
 
-    /**
-     * Menampilkan informasi lokasi perpustakaan
-     * dan data buku yang ada di dalamnya.
-     */
+    // Tambahkan buku ke perpustakaan
+    public void addBook(Book book) {
+        books.add(book);
+        System.out.println("Book \"" + book.getTitle() + "\" added to library.");
+    }
+
+    // Hapus buku berdasarkan judul
+    public void removeBook(String title) {
+        boolean removed = books.removeIf(b -> b.getTitle().equalsIgnoreCase(title));
+        if (removed) {
+            System.out.println("Book \"" + title + "\" removed from library.");
+        } else {
+            System.out.println("Book \"" + title + "\" not found.");
+        }
+    }
+
+    // Cari buku berdasarkan judul
+    public Book searchBook(String title) {
+        for (Book b : books) {
+            if (b.getTitle().equalsIgnoreCase(title)) {
+                System.out.println("Book found!");
+                b.displayInfo();
+                return b;
+            }
+        }
+        System.out.println("Book not found.");
+        return null;
+    }
+
+    // Tampilkan semua buku
+    public void displayAllBooks() {
+        System.out.println("=== " + location + " Library Book List ===");
+        if (books.isEmpty()) {
+            System.out.println("No books available.");
+        } else {
+            for (Book b : books) {
+                b.displayInfo();
+            }
+        }
+    }
+
+    // Hitung total nilai seluruh stok buku
+    public double calculateTotalValue() {
+        double total = 0;
+        for (Book b : books) {
+            total += b.getPrice() * b.getStock();
+        }
+        return total;
+    }
+
+    // Tampilkan informasi perpustakaan
     public void showLibraryInfo() {
-        System.out.println("Library Location: " + getLocation());
-        book.displayInfo();
+        System.out.println("Library Location: " + location);
+        System.out.println("Total Books: " + books.size());
+        System.out.println("Total Value: $" + calculateTotalValue());
+        System.out.println("==============================");
     }
 }

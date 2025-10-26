@@ -1,40 +1,41 @@
 /**
  * ==========================================================
- * Kelas Main
+ * Kelas Main (versi ditingkatkan)
  * ==========================================================
- * Deskripsi:
- * Kelas ini merupakan entry point program.
- * Program ini membuat objek Book dan Library, menampilkan informasi,
- * serta menyesuaikan stok buku untuk memperlihatkan perubahan data.
- *
- * @author
- * Mochammad Farhan Hikmadi
- * @version
- * 1.0
- * @since
- * 2025-10-27
+ * Program utama untuk mengelola perpustakaan.
+ * Menambahkan beberapa buku, menampilkan daftar, dan mencari buku.
  */
 public class Main {
-    /**
-     * Method utama (entry point) program.
-     * Membuat objek Book dan Library, lalu menampilkan serta memperbarui datanya.
-     *
-     * @param args Argumen baris perintah (tidak digunakan)
-     */
     public static void main(String[] args) {
-        // Membuat objek Book
-        Book book1 = new Book("Harry Potter", "J.K. Rowling", 10.2, 2);
 
-        // Membuat objek Library
-        Library lib = new Library(book1, "Perpustakaan Kota");
+        // Membuat perpustakaan baru
+        Library library = new Library("Perpustakaan Kota");
 
-        // Display initial information
-        lib.showLibraryInfo();
+        // Tambahkan beberapa buku
+        Book b1 = new Book("Harry Potter", "J.K. Rowling", 10.2, 5);
+        Book b2 = new Book("Lord of The Rings", "J.R.R. Tolkien", 12.5, 3);
+        Book b3 = new Book("Clean Code", "Robert C. Martin", 20.0, 2);
 
-        // Add more stock
-        book1.adjustStock(5);
+        library.addBook(b1);
+        library.addBook(b2);
+        library.addBook(b3);
 
-        // Display updated information
-        lib.showLibraryInfo();
+        System.out.println();
+
+        // Tampilkan semua buku
+        library.displayAllBooks();
+
+        // Cari buku tertentu
+        library.searchBook("clean code");
+
+        // Ubah stok buku
+        b1.adjustStock(3);
+
+        // Hapus buku
+        library.removeBook("Lord of The Rings");
+
+        // Tampilkan info perpustakaan setelah update
+        library.showLibraryInfo();
+        library.displayAllBooks();
     }
 }
